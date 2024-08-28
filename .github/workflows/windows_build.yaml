@@ -22,7 +22,7 @@ jobs:
      run: go build -o CsvParser.exe
 
    - name: Create zip archive
-     run: Compress-Archive -Path CsvParser.exe, config.yml -DestinationPath CsvParser.zip
+     run: Compress-Archive -Path CsvParser.exe, config_UPS.yml -DestinationPath CsvParser.zip
 
    - name: Upload artifact
      uses: actions/upload-artifact@v3
