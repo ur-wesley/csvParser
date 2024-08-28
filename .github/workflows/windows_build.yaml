@@ -44,9 +44,9 @@ jobs:
      with:
       title: CsvParser Release
 
-   - name: Release
-     uses: softprops/action-gh-release@v2
-     if: startsWith(github.ref, 'refs/tags/')
+   - name: Upload to release
+     uses: JasonEtco/upload-to-release@master
      with:
-      files: CsvParser.zip
-      tag_name: ${{ steps.tag_creation.outputs.TAG_NAME }}
+      args: CsvParser.zip
+     env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
