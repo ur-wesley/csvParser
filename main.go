@@ -48,7 +48,8 @@ func main() {
 	if len(files) == 1 {
 		filename = files[0]
 	} else {
-		filename, err = dialog.File().Filter("yml").Load()
+		dialog.Message("Mehrere config Datein gefunden, wähle die richtige aus").Info()
+		filename, err = dialog.File().Filter("config files", "yml").Title("Konfigurationsdatei auswählen").Load()
 		if err != nil {
 			panic(err)
 		}
@@ -65,7 +66,7 @@ func main() {
 		panic(err)
 	}
 
-	csvFilename, err := dialog.File().Filter("csv").Load()
+	csvFilename, err := dialog.File().Filter("CSV", "csv").Title("CSV Datei auswählen").Load()
 	if err != nil {
 		panic(err)
 	}
