@@ -11,6 +11,7 @@ import (
 
 type Config struct {
 	Columns []Column `yaml:"columns"`
+	Output  string   `yaml:"output"`
 }
 
 type Column struct {
@@ -89,7 +90,13 @@ func main() {
 		})
 	}
 
-	resultFile, err := os.Create("result.csv")
+	var outputFilename string
+	if config.Output != "" {
+		outputFilename = config.Output
+	} else {
+		outputFilename = "result.csv"
+	}
+	resultFile, err := os.Create(outputFilename)
 	if err != nil {
 		panic(err)
 	}
