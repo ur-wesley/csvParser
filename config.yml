@@ -1,0 +1,13 @@
+# index ist die Spaltennummer der Reihe -1: zb:
+# Spalte AB = 28 - 1 = 27
+# Spalte AZ = 52 - 1 = 51
+columns:
+ - index: 0
+   label: "Datum"
+ - index: 4
+   label: "Trackingnummer"
+ - index: 40
+   label: "Empfänger"
+ - index: 140
+   label: "Kosten"
+   suffix: " €"
