@@ -36,6 +36,7 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
      with:
       title: CsvParser Release
+      tag: release
 
    - name: Release
      uses: softprops/action-gh-release@v2
