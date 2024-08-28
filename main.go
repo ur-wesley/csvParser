@@ -14,9 +14,11 @@ type Config struct {
 }
 
 type Column struct {
+	Column string `yaml:"column"`
+	Name   string `yaml:"name"`
 	Index  int    `yaml:"index"`
-	Label  string `yaml:"label"`
 	Suffix string `yaml:"suffix"`
+	Prefix string `yaml:"prefix"`
 }
 
 type Shipment map[string]string
@@ -52,26 +54,38 @@ func main() {
 	}
 
 	shipmentList := []Shipment{}
+	headers := csvData[0]
 	for i, row := range csvData {
 		if i == 0 {
 			continue
 		}
 		shipment := Shipment{}
 		for _, col := range config.Columns {
-			if len(row) > col.Index {
-				if col.Suffix != "" {
-					shipment[col.Label] = row[col.Index] + col.Suffix
-				} else {
-					shipment[col.Label] = row[col.Index]
+			var value string
+			if col.Index > 0 && col.Index < len(row) {
+				value = row[col.Index-1]
+			} else if col.Name != "" {
+				for idx, header := range headers {
+					if header == col.Name {
+						value = row[idx]
+						break
+					}
 				}
 			}
+			if col.Suffix != "" {
+				value += col.Suffix
+			}
+			if col.Prefix != "" {
+				value = col.Prefix + value
+			}
+			shipment[col.Column] = value
 		}
 		shipmentList = append(shipmentList, shipment)
 	}
 
 	if len(config.Columns) > 0 {
 		sort.Slice(shipmentList, func(i, j int) bool {
-			return shipmentList[i][config.Columns[0].Label] < shipmentList[j][config.Columns[0].Label]
+			return shipmentList[i][config.Columns[0].Column] < shipmentList[j][config.Columns[0].Column]
 		})
 	}
 
@@ -80,21 +94,22 @@ func main() {
 		panic(err)
 	}
 	defer resultFile.Close()
+	resultFile.WriteString("\xEF\xBB\xBF")
 
 	writer := csv.NewWriter(resultFile)
 	writer.Comma = ';'
 	defer writer.Flush()
 
-	headers := []string{}
+	resultHeaders := []string{}
 	for _, col := range config.Columns {
-		headers = append(headers, col.Label)
+		resultHeaders = append(resultHeaders, col.Column)
 	}
-	writer.Write(headers)
+	writer.Write(resultHeaders)
 
 	for _, shipment := range shipmentList {
 		row := []string{}
 		for _, col := range config.Columns {
-			row = append(row, shipment[col.Label])
+			row = append(row, shipment[col.Column])
 		}
 		writer.Write(row)
 	}
