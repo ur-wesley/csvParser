@@ -25,7 +25,36 @@ type Column struct {
 type Shipment map[string]string
 
 func main() {
-	configFile, err := os.ReadFile("config.yml")
+	files := []string{}
+	dir, err := os.ReadDir(".")
+	if err != nil {
+		panic(err)
+	}
+	for _, file := range dir {
+		if file.IsDir() {
+			continue
+		}
+		if file.Name()[:6] == "config" && file.Name()[len(file.Name())-4:] == ".yml" {
+			files = append(files, file.Name())
+		}
+	}
+
+	if len(files) == 0 {
+		dialog.Message("Keine config Datei gefunden").Error()
+		os.Exit(1)
+	}
+
+	var filename string
+	if len(files) == 1 {
+		filename = files[0]
+	} else {
+		filename, err = dialog.File().Filter("yml").Load()
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	configFile, err := os.ReadFile(filename)
 	if err != nil {
 		panic(err)
 	}
@@ -36,12 +65,12 @@ func main() {
 		panic(err)
 	}
 
-	filename, err := dialog.File().Filter("csv").Load()
+	csvFilename, err := dialog.File().Filter("csv").Load()
 	if err != nil {
 		panic(err)
 	}
 
-	file, err := os.Open(filename)
+	file, err := os.Open(csvFilename)
 	if err != nil {
 		panic(err)
 	}
