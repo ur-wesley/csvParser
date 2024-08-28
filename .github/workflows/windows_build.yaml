@@ -35,7 +35,6 @@ jobs:
      run: |
       git tag v0.0.${{ github.run_number }}
       git push origin $TAG_NAME
-      echo "::set-output name=TAG_NAME::$TAG_NAME"
 
    - name: Create a Release
      uses: elgohr/Github-Release-Action@v5
@@ -47,6 +46,6 @@ jobs:
 
    - name: Release
      uses: softprops/action-gh-release@v2
+     if: startsWith(github.ref, 'refs/tags/')
      with:
-      tag_name: ${{ steps.tag_creation.outputs.TAG_NAME }}
       files: CsvParser.zip
