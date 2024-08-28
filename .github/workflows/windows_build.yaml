@@ -30,13 +30,25 @@ jobs:
       name: CsvParser
       path: CsvParser.zip
 
+   - name: Create Git tag
+     id: tag_creation
+     run: |
+      # Create a new tag based on the current date-time or a version number
+      TAG_NAME=v1.0.${{ github.run_number }}
+      git tag $TAG_NAME
+      git push origin $TAG_NAME
+      echo "::set-output name=TAG_NAME::$TAG_NAME"
+
    - name: Create a Release
      uses: elgohr/Github-Release-Action@v5
      env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
      with:
       title: CsvParser Release
-      tag: release
+      tag: ${{ steps.tag_creation.outputs.TAG_NAME }}
 
    - name: Release
      uses: softprops/action-gh-release@v2
+     with:
+      tag_name: ${{ steps.tag_creation.outputs.TAG_NAME }}
+      files: CsvParser.zip
