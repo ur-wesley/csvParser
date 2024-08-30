@@ -22,10 +22,11 @@ jobs:
      run: go build -o CsvParser.exe
 
    - name: Create zip archive
-     run: Compress-Archive -Path CsvParser.exe, config_UPS.yml -DestinationPath CsvParser.zip
+     run: Compress-Archive -Path CsvParser.exe, config_UPS.yml -DestinationPath bin/CsvParser.zip
 
-   - name: Upload artifact
-     uses: actions/upload-artifact@v3
+   - name: Upload Executable to Release
+     uses: svenstaro/upload-release-action@v2
      with:
-      name: CsvParser
-      path: CsvParser.zip
+       repo_token: ${{ secrets.GITHUB_TOKEN }}
+       file: bin/CsvParser.zip
+       tag: ${{ github.ref }}
