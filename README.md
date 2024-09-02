@@ -1,5 +1,7 @@
 # CSV Parser
 
+![CSV Parser](/icon.png =100x100)
+
 Diese README.md dient als Anleitung zur Konfiguration des CSV-Parsers mithilfe der `config.yml`-Datei. Diese Datei ermöglicht es, bestimmte Spalten aus einer CSV-Datei auszuwählen und deren Inhalte bei Bedarf anzupassen, indem Präfixe oder Suffixe hinzugefügt werden.
 
 ## Konfigurationsformat
@@ -41,3 +43,7 @@ output: "result.csv"
 delimiter: ","
 ignore_header: true
 ```
+
+### Credits
+
+Logo made by [Freepik](https://www.freepik.com) from [Flaticon](https://www.flaticon.com/de/kostenloses-icon/filtern_473194?term=filtern&page=1&position=34&origin=tag&related_id=473194) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
