@@ -27,7 +27,7 @@ jobs:
      run: go build . -ldflags="-s -w -X main.currentVersion=${{ env.VERSION }}" -o CsvParser.exe
 
    - name: Create zip archive
-     run: Compress-Archive -Path CsvParser.exe, config_UPS.yml -DestinationPath CsvParser.zip
+     run: Compress-Archive -Path CsvParser.exe, config_example.yml -DestinationPath CsvParser.zip
 
    - name: Upload Executable to Release
      uses: svenstaro/upload-release-action@v2

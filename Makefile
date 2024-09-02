@@ -2,5 +2,5 @@ run:
 	go run main.go
 
 build:
-	go build -o bin\upsParser.exe main.go
-	copy config.yml bin\config.yml
+	go build -o bin\csvParser.exe main.go
+	copy config_exmaple.yml bin\config_exmaple.yml

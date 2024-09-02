@@ -1,4 +1,4 @@
-module github.com/ur-wesley/upsCsvParser
+module github.com/ur-wesley/csvParser
 
 go 1.22.0
 

@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-const repoApi = "https://api.github.com/repos/ur-wesley/UpsCsvParser/releases/latest"
+const repoApi = "https://api.github.com/repos/ur-wesley/csvParser/releases/latest"
 
 var currentVersion string
 
