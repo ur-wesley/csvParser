@@ -21,7 +21,7 @@ jobs:
    - name: Extract version from tag
      id: version
      run: |
-      echo "VERSION=${GITHUB_REF#refs/tags}" >> $GITHUB_ENV
+      echo "VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
    - name: Build Windows executable
      run: go build . -ldflags="-s -w -X main.currentVersion=${{ env.VERSION }}" -o CsvParser.exe
