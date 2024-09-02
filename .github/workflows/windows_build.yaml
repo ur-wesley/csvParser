@@ -21,10 +21,16 @@ jobs:
    - name: Extract version from tag
      id: version
      run: |
-      echo "VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+   - name: Print version
+     run: |
+      echo $VERSION
+      echo $GITHUB_REF_NAME
+      echo ${{ env.VERSION }}
 
    - name: Build Windows executable
-     run: go build -ldflags="-s -w -X main.currentVersion=${{ env.VERSION }}" -o CsvParser.exe
+     run: go build -ldflags="-s -w -X main.currentVersion=$VERSION" -o CsvParser.exe
 
    - name: Create zip archive
      run: Compress-Archive -Path CsvParser.exe, config_example.yml -DestinationPath CsvParser.zip
