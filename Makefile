@@ -1,5 +1,8 @@
+setup:
+	go mod tidy
+
 run:
-	go run main.go
+	go run .
 
 build:
 	go build -o bin\csvParser.exe main.go
