@@ -1,3 +1,4 @@
+# Für weitere Hilfe: https://github.com/ur-wesley/csvParser
 columns:
  - column: "Datum"
    name: "Versanddatum"
