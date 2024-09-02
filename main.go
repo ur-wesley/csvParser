@@ -10,6 +10,18 @@ import (
 )
 
 func main() {
+	doUpdate := dialog.Message("Es ist ein Update verfügbar. Möchten Sie es herunterladen?").Title("Update verfügbar")
+	updateAvailable, err := UpdateAvailable()
+	if err != nil {
+		ShowErrorDialog(fmt.Sprintf("Failed to check for updates: %v", err))
+		log.Fatalf("Failed to check for updates: %v", err)
+	}
+
+	if updateAvailable && doUpdate.YesNo() {
+		DownloadUpdate()
+		return
+	}
+
 	config, err := GetConfig()
 	if err != nil {
 		ShowErrorDialog(fmt.Sprintf("Failed to get config: %v", err))
