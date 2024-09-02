@@ -4,7 +4,8 @@ Diese README.md dient als Anleitung zur Konfiguration des CSV-Parsers mithilfe d
 
 ## Konfigurationsformat
 
-Die Konfigurationsdatei `config.yml` definiert eine Liste von Spalten, die der CSV-Parser verarbeiten soll. Jede Spalte wird durch ein Objekt innerhalb der Liste `columns` dargestellt. Die Konfiguration jeder Spalte kann folgende Parameter enthalten:
+Es können mehrere `config` Dateien erstellt werden. Wichtig dabei ist, das sie die Endung `.yml` haben und mit `config` beginnen. Die Datei muss im gleichen Verzeichnis wie das Programm liegen. Zum Beispiel `config.yml`, `config2.yml` oder `config_example.yml`. Wenn mehrere Dateien vorhanden sind, wird in einem Dialog abgefragt welche verwendet werden soll.
+Die Konfigurationsdatei definiert eine Liste von Spalten, die der CSV-Parser verarbeiten soll. Jede Spalte wird durch ein Objekt innerhalb der Liste `columns` dargestellt. Die Konfiguration jeder Spalte kann folgende Parameter enthalten:
 
 | Parameter       | Beschreibung                                                                                                     | Optional | Standard     |
 | --------------- | ---------------------------------------------------------------------------------------------------------------- | -------- | ------------ |
