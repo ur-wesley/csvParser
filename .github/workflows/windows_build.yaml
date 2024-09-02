@@ -1,9 +1,9 @@
 name: Build and Zip Go App (Windows)
 
 on:
-  workflow_dispatch:
-  release:
-    types: [ created ]
+ workflow_dispatch:
+ release:
+  types: [created]
 
 jobs:
  build:
@@ -18,8 +18,13 @@ jobs:
      with:
       go-version: "1.22"
 
+   - name: Extract version from tag
+     id: version
+     run: |
+      echo "VERSION=${GITHUB_REF#refs/tags}" >> $GITHUB_ENV
+
    - name: Build Windows executable
-     run: go build -o CsvParser.exe
+     run: go build . -ldflags="-s -w -X main.currentVersion=${{ env.VERSION }}" -o CsvParser.exe
 
    - name: Create zip archive
      run: Compress-Archive -Path CsvParser.exe, config_UPS.yml -DestinationPath CsvParser.zip
@@ -27,6 +32,6 @@ jobs:
    - name: Upload Executable to Release
      uses: svenstaro/upload-release-action@v2
      with:
-       repo_token: ${{ secrets.GITHUB_TOKEN }}
-       file: CsvParser.zip
-       tag: ${{ github.ref }}
+      repo_token: ${{ secrets.GITHUB_TOKEN }}
+      file: CsvParser.zip
+      tag: ${{ github.ref }}
