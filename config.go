@@ -16,11 +16,12 @@ type Config struct {
 }
 
 type Column struct {
-	Column string `yaml:"column"`
-	Name   string `yaml:"name"`
-	Index  int    `yaml:"index"`
-	Suffix string `yaml:"suffix"`
-	Prefix string `yaml:"prefix"`
+	Column  string            `yaml:"column"`
+	Name    string            `yaml:"name"`
+	Index   int               `yaml:"index"`
+	Suffix  string            `yaml:"suffix"`
+	Prefix  string            `yaml:"prefix"`
+	Replace map[string]string `yaml:"replace"`
 }
 
 func GetConfig() (Config, error) {

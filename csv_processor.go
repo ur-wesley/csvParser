@@ -61,9 +61,17 @@ func ProcessCSVData(csvData CsvData, config Config) ([]NewData, error) {
 			} else {
 				return nil, errors.New("cannot use config.name with config.ignore_header == true")
 			}
+
+			if col.Replace != nil {
+				if newValue, exists := col.Replace[value]; exists {
+					value = newValue
+				}
+			}
+
 			if col.Suffix != "" {
 				value += col.Suffix
 			}
+
 			if col.Prefix != "" {
 				value = col.Prefix + value
 			}
