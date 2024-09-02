@@ -24,12 +24,18 @@ func main() {
 
 	config, err := GetConfig()
 	if err != nil {
+		if err.Error() == "Cancelled" {
+			return
+		}
 		ShowErrorDialog(fmt.Sprintf("Failed to get config: %v", err))
 		log.Fatalf("Failed to get config: %v", err)
 	}
 
 	csvFilename, err := dialog.File().Filter("CSV", "csv").Title("CSV Datei auswählen").Load()
 	if err != nil {
+		if err.Error() == "Cancelled" {
+			return
+		}
 		ShowErrorDialog(fmt.Sprintf("Failed to load CSV file: %v", err))
 		log.Fatalf("Failed to load CSV file: %v", err)
 	}
