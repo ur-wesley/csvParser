@@ -1,9 +1,9 @@
 name: Build and Zip Go App (Windows)
 
 on:
- push:
-  branches:
-   - main
+  workflow_dispatch:
+  release:
+    types: [ created ]
 
 jobs:
  build:
@@ -24,8 +24,9 @@ jobs:
    - name: Create zip archive
      run: Compress-Archive -Path CsvParser.exe, config_UPS.yml -DestinationPath CsvParser.zip
 
-   - name: Upload artifact
-     uses: actions/upload-artifact@v3
+   - name: Upload Executable to Release
+     uses: svenstaro/upload-release-action@v2
      with:
-      name: CsvParser
-      path: CsvParser.zip
+       repo_token: ${{ secrets.GITHUB_TOKEN }}
+       file: CsvParser.zip
+       tag: ${{ github.ref }}
