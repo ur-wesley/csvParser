@@ -5,6 +5,7 @@ import (
 	"errors"
 	"os"
 	"sort"
+	"strings"
 )
 
 type NewData map[string]string
@@ -62,9 +63,11 @@ func ProcessCSVData(csvData CsvData, config Config) ([]NewData, error) {
 				return nil, errors.New("cannot use config.name with config.ignore_header == true")
 			}
 
-			if col.Replace != nil {
-				if newValue, exists := col.Replace[value]; exists {
-					value = newValue
+			if len(col.Replace) > 0 {
+				for old, new := range col.Replace {
+					if strings.Contains(value, old) {
+						value = strings.ReplaceAll(value, old, new)
+					}
 				}
 			}
 
