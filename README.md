@@ -12,6 +12,8 @@ Die Konfigurationsdatei `config.yml` definiert eine Liste von Spalten, die der C
 - `suffix`: Ein Suffix, das an den Wert der Spalte angehängt wird (optional).
 - `prefix`: Ein Präfix, das an den Wert der Spalte vorangestellt wird (optional).
 - `output`: Der Name der Ausgabedatei, in die die gefilterten und bearbeiteten Daten geschrieben werden (optional, Standard ist `result.csv`).
+- `delimiter`: Das Trennzeichen, das in der Ausgabedatei verwendet werden soll (optional, Standard ist `;`).
+- `ignore_header`: Ein boolescher Wert, der angibt, ob die Kopfzeile der CSV-Datei ignoriert werden soll (optional, Standard ist `false`).
 
 ## Beispiel-Konfiguration
 
@@ -29,4 +31,6 @@ columns:
     name: "Ausgehandelter Gesamtbetrag"
     suffix: " €"
 output: "result.csv"
+delimiter: ","
+ignore_header: true
 ```

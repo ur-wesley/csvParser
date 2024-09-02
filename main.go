@@ -2,124 +2,46 @@ package main
 
 import (
 	"encoding/csv"
+	"fmt"
+	"log"
 	"os"
-	"sort"
 
 	"github.com/sqweek/dialog"
-	"gopkg.in/yaml.v3"
 )
 
-type Config struct {
-	Columns []Column `yaml:"columns"`
-	Output  string   `yaml:"output"`
-}
-
-type Column struct {
-	Column string `yaml:"column"`
-	Name   string `yaml:"name"`
-	Index  int    `yaml:"index"`
-	Suffix string `yaml:"suffix"`
-	Prefix string `yaml:"prefix"`
-}
-
-type Shipment map[string]string
-
 func main() {
-	files := []string{}
-	dir, err := os.ReadDir(".")
+	config, err := GetConfig()
 	if err != nil {
-		panic(err)
-	}
-	for _, file := range dir {
-		if file.IsDir() {
-			continue
-		}
-		if file.Name()[:6] == "config" && file.Name()[len(file.Name())-4:] == ".yml" {
-			files = append(files, file.Name())
-		}
-	}
-
-	if len(files) == 0 {
-		dialog.Message("Keine config Datei gefunden").Error()
-		os.Exit(1)
-	}
-
-	var filename string
-	if len(files) == 1 {
-		filename = files[0]
-	} else {
-		dialog.Message("Mehrere config Datein gefunden, wähle die richtige aus").Info()
-		filename, err = dialog.File().Filter("config files", "yml").Title("Konfigurationsdatei auswählen").Load()
-		if err != nil {
-			panic(err)
-		}
-	}
-
-	configFile, err := os.ReadFile(filename)
-	if err != nil {
-		panic(err)
-	}
-
-	var config Config
-	err = yaml.Unmarshal(configFile, &config)
-	if err != nil {
-		panic(err)
+		ShowErrorDialog(fmt.Sprintf("Failed to get config: %v", err))
+		log.Fatalf("Failed to get config: %v", err)
 	}
 
 	csvFilename, err := dialog.File().Filter("CSV", "csv").Title("CSV Datei auswählen").Load()
 	if err != nil {
-		panic(err)
+		ShowErrorDialog(fmt.Sprintf("Failed to load CSV file: %v", err))
+		log.Fatalf("Failed to load CSV file: %v", err)
 	}
 
-	file, err := os.Open(csvFilename)
+	csvData, err := LoadCSVData(csvFilename, config)
 	if err != nil {
-		panic(err)
+		ShowErrorDialog(fmt.Sprintf("Failed to load CSV data: %v", err))
+		log.Fatalf("Failed to load CSV data: %v", err)
 	}
-	defer file.Close()
 
-	reader := csv.NewReader(file)
-	reader.FieldsPerRecord = -1
-	csvData, err := reader.ReadAll()
+	newDataList, err := ProcessCSVData(csvData, config)
 	if err != nil {
-		panic(err)
+		ShowErrorDialog(fmt.Sprintf("Failed to process CSV data: %v", err))
+		log.Fatalf("Failed to process CSV data: %v", err)
 	}
 
-	shipmentList := []Shipment{}
-	headers := csvData[0]
-	for i, row := range csvData {
-		if i == 0 {
-			continue
-		}
-		shipment := Shipment{}
-		for _, col := range config.Columns {
-			var value string
-			if col.Index > 0 && col.Index < len(row) {
-				value = row[col.Index-1]
-			} else if col.Name != "" {
-				for idx, header := range headers {
-					if header == col.Name {
-						value = row[idx]
-						break
-					}
-				}
-			}
-			if col.Suffix != "" {
-				value += col.Suffix
-			}
-			if col.Prefix != "" {
-				value = col.Prefix + value
-			}
-			shipment[col.Column] = value
-		}
-		shipmentList = append(shipmentList, shipment)
+	err = writeResultFile(newDataList, config)
+	if err != nil {
+		ShowErrorDialog(fmt.Sprintf("Failed to write result file: %v", err))
+		log.Fatalf("Failed to write result file: %v", err)
 	}
+}
 
-	if len(config.Columns) > 0 {
-		sort.Slice(shipmentList, func(i, j int) bool {
-			return shipmentList[i][config.Columns[0].Column] < shipmentList[j][config.Columns[0].Column]
-		})
-	}
-
+func writeResultFile(newDataList []NewData, config Config) error {
 	var outputFilename string
 	if config.Output != "" {
 		outputFilename = config.Output
@@ -128,26 +50,38 @@ func main() {
 	}
 	resultFile, err := os.Create(outputFilename)
 	if err != nil {
-		panic(err)
+		return err
 	}
 	defer resultFile.Close()
 	resultFile.WriteString("\xEF\xBB\xBF")
 
 	writer := csv.NewWriter(resultFile)
-	writer.Comma = ';'
+	if config.Delimiter != "" {
+		writer.Comma = rune(config.Delimiter[0])
+	} else {
+		writer.Comma = ';'
+	}
 	defer writer.Flush()
 
 	resultHeaders := []string{}
 	for _, col := range config.Columns {
 		resultHeaders = append(resultHeaders, col.Column)
 	}
-	writer.Write(resultHeaders)
+	err = writer.Write(resultHeaders)
+	if err != nil {
+		return err
+	}
 
-	for _, shipment := range shipmentList {
+	for _, newData := range newDataList {
 		row := []string{}
 		for _, col := range config.Columns {
-			row = append(row, shipment[col.Column])
+			row = append(row, newData[col.Column])
 		}
-		writer.Write(row)
+		err = writer.Write(row)
+		if err != nil {
+			return err
+		}
 	}
+
+	return nil
 }
