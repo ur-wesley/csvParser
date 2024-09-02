@@ -6,14 +6,16 @@ Diese README.md dient als Anleitung zur Konfiguration des CSV-Parsers mithilfe d
 
 Die Konfigurationsdatei `config.yml` definiert eine Liste von Spalten, die der CSV-Parser verarbeiten soll. Jede Spalte wird durch ein Objekt innerhalb der Liste `columns` dargestellt. Die Konfiguration jeder Spalte kann folgende Parameter enthalten:
 
-- `column`: Der Name der Spalte im Ergebnis (erforderlich).
-- `name`: Der Name der Spalte, wie sie in der CSV-Datei benannt ist. Entweder `name` oder `index` muss angegeben werden, um die Spalte zu identifizieren.
-- `index`: Der Index der Spalte in der CSV-Datei (beginnend bei 1). Alternativ zu `name` kann `index` verwendet werden, um die Spalte zu identifizieren.
-- `suffix`: Ein Suffix, das an den Wert der Spalte angehängt wird (optional).
-- `prefix`: Ein Präfix, das an den Wert der Spalte vorangestellt wird (optional).
-- `output`: Der Name der Ausgabedatei, in die die gefilterten und bearbeiteten Daten geschrieben werden (optional, Standard ist `result.csv`).
-- `delimiter`: Das Trennzeichen, das in der Ausgabedatei verwendet werden soll (optional, Standard ist `;`).
-- `ignore_header`: Ein boolescher Wert, der angibt, ob die Kopfzeile der CSV-Datei ignoriert werden soll (optional, Standard ist `false`).
+| Parameter       | Beschreibung                                                                              | Optional | Standard     |
+| --------------- | ----------------------------------------------------------------------------------------- | -------- | ------------ |
+| `column`        | Der Name der Spalte im Ergebnis.                                                          | Nein     | -            |
+| `name`          | Der Name der Spalte in der CSV-Datei. Entweder `name` oder `index` muss angegeben werden. | Ja       | -            |
+| `index`         | Der Index der Spalte in der CSV-Datei (beginnend bei 1). Alternativ zu `name`.            | Ja       | -            |
+| `suffix`        | Ein Suffix, das an den Wert der Spalte angehängt wird.                                    | Ja       | -            |
+| `prefix`        | Ein Präfix, das an den Wert der Spalte vorangestellt wird.                                | Ja       | -            |
+| `output`        | Der Name der Ausgabedatei.                                                                | Ja       | `result.csv` |
+| `delimiter`     | Das Trennzeichen in der Ausgabedatei.                                                     | Ja       | `;`          |
+| `ignore_header` | Ob die Kopfzeile der CSV-Datei ignoriert werden soll.                                     | Ja       | `false`      |
 
 ## Beispiel-Konfiguration
 
