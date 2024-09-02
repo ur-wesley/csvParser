@@ -6,17 +6,17 @@ Diese README.md dient als Anleitung zur Konfiguration des CSV-Parsers mithilfe d
 
 Die Konfigurationsdatei `config.yml` definiert eine Liste von Spalten, die der CSV-Parser verarbeiten soll. Jede Spalte wird durch ein Objekt innerhalb der Liste `columns` dargestellt. Die Konfiguration jeder Spalte kann folgende Parameter enthalten:
 
-| Parameter       | Beschreibung                                                                              | Optional | Standard     |
-| --------------- | ----------------------------------------------------------------------------------------- | -------- | ------------ |
-| `column`        | Der Name der Spalte im Ergebnis.                                                          | Nein     | -            |
-| `name`          | Der Name der Spalte in der CSV-Datei. Entweder `name` oder `index` muss angegeben werden. | Ja       | -            |
-| `index`         | Der Index der Spalte in der CSV-Datei (beginnend bei 1). Alternativ zu `name`.            | Ja       | -            |
-| `suffix`        | Ein Suffix, das an den Wert der Spalte angehängt wird.                                    | Ja       | -            |
-| `prefix`        | Ein Präfix, das an den Wert der Spalte vorangestellt wird.                                | Ja       | -            |
-| `replace`       | Eine Map von Werten, die ersetzt werden sollen. Alt: neu                                  | Ja       | -            |
-| `output`        | Der Name der Ausgabedatei.                                                                | Ja       | `result.csv` |
-| `delimiter`     | Das Trennzeichen in der Ausgabedatei.                                                     | Ja       | `;`          |
-| `ignore_header` | Ob die Kopfzeile der CSV-Datei ignoriert werden soll.                                     | Ja       | `false`      |
+| Parameter       | Beschreibung                                                                                                     | Optional | Standard     |
+| --------------- | ---------------------------------------------------------------------------------------------------------------- | -------- | ------------ |
+| `column`        | Der Name der Spalte im Ergebnis.                                                                                 | Nein     | -            |
+| `name`          | Der Name der Spalte in der CSV-Datei. Entweder `name` oder `index` muss angegeben werden.                        | Ja       | -            |
+| `index`         | Der Index der Spalte in der CSV-Datei (beginnend bei 1). Alternativ zu `name`.                                   | Ja       | -            |
+| `suffix`        | Ein Suffix, das an den Wert der Spalte angehängt wird.                                                           | Ja       | -            |
+| `prefix`        | Ein Präfix, das an den Wert der Spalte vorangestellt wird.                                                       | Ja       | -            |
+| `replace`       | Eine Map von Werten, die ersetzt werden sollen. Alt: neu                                                         | Ja       | -            |
+| `output`        | Der Name der Ausgabedatei.                                                                                       | Ja       | `result.csv` |
+| `delimiter`     | Das Trennzeichen in der Ausgabedatei.                                                                            | Ja       | `;`          |
+| `ignore_header` | Ob die Kopfzeile der CSV-Datei ignoriert werden soll. `name` funktioniert dann nicht mehr! `index` erforderlich. | Ja       | `false`      |
 
 ## Beispiel-Konfiguration
 
