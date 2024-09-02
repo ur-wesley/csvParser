@@ -1,6 +1,6 @@
 # CSV Parser
 
-![](/icon.png =100x100)
+![](/icon.png)
 
 Diese README.md dient als Anleitung zur Konfiguration des CSV-Parsers mithilfe der `config.yml`-Datei. Diese Datei ermöglicht es, bestimmte Spalten aus einer CSV-Datei auszuwählen und deren Inhalte bei Bedarf anzupassen, indem Präfixe oder Suffixe hinzugefügt werden.
 
