@@ -18,17 +18,6 @@ jobs:
      with:
       go-version: "1.22"
 
-   - name: Extract version from tag
-     id: version
-     run: |
-      Write-Output "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-
-   - name: Print version
-     run: |
-      Write-Output $VERSION
-      Write-Output $GITHUB_REF_NAME
-      Write-Output ${{ env.VERSION }}
-
    - name: Build Windows executable
      run: go build -ldflags="-s -w -X main.currentVersion=$GITHUB_REF_NAME" -o CsvParser.exe
 
