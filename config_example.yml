@@ -20,4 +20,6 @@ columns:
    index: 41
  - column: "Kosten"
    name: "Ausgehandelter Gesamtbetrag"
-   suffix: " €"
+   suffix: "€"
+   replace:
+    - ".": ","
