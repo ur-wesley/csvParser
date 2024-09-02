@@ -13,7 +13,7 @@ Die Konfigurationsdatei `config.yml` definiert eine Liste von Spalten, die der C
 | `index`         | Der Index der Spalte in der CSV-Datei (beginnend bei 1). Alternativ zu `name`.            | Ja       | -            |
 | `suffix`        | Ein Suffix, das an den Wert der Spalte angehängt wird.                                    | Ja       | -            |
 | `prefix`        | Ein Präfix, das an den Wert der Spalte vorangestellt wird.                                | Ja       | -            |
-| `replace`       | Eine Map von Werten, die ersetzt werden sollen.                                           | Ja       | -            |
+| `replace`       | Eine Map von Werten, die ersetzt werden sollen. Alt: neu                                  | Ja       | -            |
 | `output`        | Der Name der Ausgabedatei.                                                                | Ja       | `result.csv` |
 | `delimiter`     | Das Trennzeichen in der Ausgabedatei.                                                     | Ja       | `;`          |
 | `ignore_header` | Ob die Kopfzeile der CSV-Datei ignoriert werden soll.                                     | Ja       | `false`      |
