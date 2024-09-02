@@ -10,18 +10,18 @@ import (
 
 type Config struct {
 	Columns      []Column `yaml:"columns"`
-	Output       string   `yaml:"output"`
-	Delimiter    string   `yaml:"delimiter"`
-	IgnoreHeader bool     `yaml:"ignore_header"`
+	Output       string   `yaml:"output,omitempty"`
+	Delimiter    string   `yaml:"delimiter,omitempty"`
+	IgnoreHeader bool     `yaml:"ignore_header,omitempty"`
 }
 
 type Column struct {
-	Column  string            `yaml:"column"`
-	Name    string            `yaml:"name"`
-	Index   int               `yaml:"index"`
-	Suffix  string            `yaml:"suffix"`
-	Prefix  string            `yaml:"prefix"`
-	Replace map[string]string `yaml:"replace"`
+	Column  string            `yaml:"column,omitempty"`
+	Name    string            `yaml:"name,omitempty"`
+	Index   int               `yaml:"index,omitempty"`
+	Suffix  string            `yaml:"suffix,omitempty"`
+	Prefix  string            `yaml:"prefix,omitempty"`
+	Replace map[string]string `yaml:"replace,omitempty"`
 }
 
 func GetConfig() (Config, error) {
